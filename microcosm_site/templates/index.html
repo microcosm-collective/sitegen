@@ -1,0 +1,37 @@
+{% extends 'marketing_base.html' %}
+
+{% block content %}
+
+<ul style="display:none">
+{% if headers %}
+    <li>Headers</li>
+        {% for name, value in headers.items %}{% if value %}<li>{{ name }} => {{ value }}</li>{% endif %}
+        {% endfor %}
+{% else %}
+    <li>No headers</li>
+{% endif %}
+</ul>
+
+<div id="homeview-body">
+    <div class="container">
+        <div class="text-headline" style="text-align:center;">
+            <h1>Non-commercial, non-profit, privacy sensitive, accessible forums.</h1>
+        </div>
+        <ul class="benefits row">
+            <li>
+                <div class="col-md-12 benefits-text">
+                    <p>Microcosm is a modern forum platform with a privacy focus for non-profit communities.</p>
+                    <p>It is run by a single person in their spare time for a social good.</p>
+                    <p>As of 2024-12-16 Microcosm announce that unless something dramatic changes, that <a href="https://www.lfgss.com/conversations/401475/">Microcosm will shutter on 16th March 2025 as a consequence of the Online Safety Act</a>.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{STATIC_URL}}js/swipe.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/homeview.js?v=1"></script>
+{% endblock %}
