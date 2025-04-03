@@ -19,11 +19,7 @@ source /srv/www/django/sitegenenv/bin/activate
 cd /srv/www/django/sitegen
 test -d $LOGDIR || mkdir -p $LOGDIR
 
-NEW_RELIC_CONFIG_FILE=/srv/www/django/sitegen/newrelic.ini
-export NEW_RELIC_CONFIG_FILE
 
-exec /srv/www/django/sitegenenv/bin/newrelic-admin run-program \
-    /srv/www/django/sitegenenv/bin/gunicorn_django -b $HOST \
+exec /srv/www/django/sitegenenv/bin/gunicorn_django -b $HOST \
     -w $NUM_WORKERS -k gevent --user=$USER --group=$GROUP --log-level=info \
     --max-requests 5000 --log-file=$LOGFILE 2>>$LOGFILE
-

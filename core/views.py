@@ -2,7 +2,6 @@ import datetime
 import logging
 import requests
 import grequests
-import newrelic
 import random
 import string
 
@@ -83,9 +82,6 @@ class ErrorView(object):
         if request.whoami_url:
             profile = Profile(responses[whoami_url], summary=False)
             view_data['user'] = profile
-            newrelic.agent.add_custom_parameter('profile_name', profile.profile_name)
-            newrelic.agent.add_custom_parameter('profile_id', profile.id)
-            newrelic.agent.add_custom_parameter('user_id', profile.user_id)
 
         context = RequestContext(request, view_data)
         return HttpResponseNotFound(loader.get_template('404.html').render(context))
@@ -104,9 +100,6 @@ class ErrorView(object):
         if request.whoami_url:
             profile = Profile(responses[whoami_url], summary=False)
             view_data['user'] = profile
-            newrelic.agent.add_custom_parameter('profile_name', profile.profile_name)
-            newrelic.agent.add_custom_parameter('profile_id', profile.id)
-            newrelic.agent.add_custom_parameter('user_id', profile.user_id)
 
         context = RequestContext(request, view_data)
         return HttpResponseForbidden(loader.get_template('403.html').render(context))
@@ -125,9 +118,6 @@ class ErrorView(object):
         if request.whoami_url:
             profile = Profile(responses[whoami_url], summary=False)
             view_data['user'] = profile
-            newrelic.agent.add_custom_parameter('profile_name', profile.profile_name)
-            newrelic.agent.add_custom_parameter('profile_id', profile.id)
-            newrelic.agent.add_custom_parameter('user_id', profile.user_id)
 
         context = RequestContext(request, view_data)
         return HttpResponseServerError(loader.get_template('500.html').render(context))
@@ -241,7 +231,7 @@ class Auth0View(object):
         resp = HttpResponseRedirect(target_url)
         expires = datetime.datetime.fromtimestamp(2 ** 31 - 1)
         resp.set_cookie('access_token', access_token, expires=expires, httponly=True)
-       
+
         return resp
 
 
