@@ -17,4 +17,4 @@ pylibmc==1.2.3
 # Gevent requests
 grequests==0.2.0
 
-newrelic==2.16.0.12
+whitenoise==2.0.6
