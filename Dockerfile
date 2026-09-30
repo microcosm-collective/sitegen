@@ -2,8 +2,12 @@ FROM python:2.7
 
 ENV APP_HOME=/srv/www/django/sitegen/
 
-
 WORKDIR ${APP_HOME}
+
+# The python:2.7 image is based on Debian Buster which is now EOL and its repositories have been moved to the archive, so we need to explicitly enable them:
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    sed -i '/buster-updates/d' /etc/apt/sources.list
 
 RUN apt-get -qq update && \
     apt-get -yq install --no-install-recommends \
@@ -44,4 +48,4 @@ USER microweb
 
 ENV PORT=80
 EXPOSE ${PORT}
-CMD python /usr/local/bin/gunicorn sitegen.wsgi -b 0.0.0.0:${PORT}
+CMD ["sh", "-c", "exec /usr/local/bin/gunicorn sitegen.wsgi -b 0.0.0.0:${PORT}"]

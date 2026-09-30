@@ -41,6 +41,9 @@ Remote:
 dokku ports:add sitegen http:9001:5000
 dokku domains:add sitegen microcosm.app
 
+dokku network:create sitegen-network
+dokku network:set sitegen initial-network sitegen-network
+
 # share the memcached instance with microweb
 dokku memcached:link microweb-memcached sitegen
 
